@@ -14,6 +14,7 @@ public:
 
     void setData(T data);
     T getData() const { return m_data; }
+    void setNextNode(std::shared_ptr<Node<T>> node);
     std::shared_ptr<Node<T>> getNextNode() const { return m_ptr_to_next_node; }
 };
 
@@ -21,7 +22,7 @@ template <typename T>
 class LinkedList {
 private:
     std::shared_ptr<Node<T>> m_head_node;
-    int m_size{0};
+    int m_size{1};
 
 public:
     LinkedList(T data);
@@ -36,6 +37,8 @@ Node<T>::Node(T data) : m_data{data}, m_ptr_to_next_node{nullptr} {}
 
 template <typename T>
 void Node<T>::setData(T data) { m_data = data; }
+template <typename T>
+void Node<T>::setNextNode(std::shared_ptr<Node<T>> node) { m_ptr_to_next_node = node; }
 
 // Implementações da classe LinkedList
 template <typename T>
@@ -44,7 +47,7 @@ LinkedList<T>::LinkedList(T data)
 
 template <typename T>
 T LinkedList<T>::info_data() const {
-    return m_head_node->getData();    
+    return m_head_node->getData();
 }
 template <typename T>
 void LinkedList<T>::addNode(T data) {
@@ -53,11 +56,7 @@ void LinkedList<T>::addNode(T data) {
     while(temp_node->getNextNode() != nullptr) {
         temp_node = temp_node->getNextNode();
     }
-    auto point_to = [&new_node, &temp_node]() -> void {
-        auto aux_node = temp_node->getNextNode();
-        aux_node = new_node;
-    }
-    point_to();
+    temp_node->setNextNode(new_node);
 }
 
 #endif
