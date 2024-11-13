@@ -6,8 +6,8 @@
 template <typename T>
 class Node {
 private:
-    T m_data{};
-    std::unique_ptr<Node<T>> m_ptr_to_next_node = nullptr;
+    T m_data;
+    std::shared_ptr<Node<T>> m_ptr_to_next_node;
 
 public:
     Node(T data);
@@ -19,7 +19,7 @@ public:
 template <typename T>
 class LinkedList {
 private:
-    std::unique_ptr<Node<T>> m_head_node{};
+    std::shared_ptr<Node<T>> m_head_node;
     int m_size{0};
 
 public:
@@ -30,7 +30,7 @@ public:
 
 // Implementações da classe Node
 template <typename T>
-Node<T>::Node(T data) : m_data{data} {}
+Node<T>::Node(T data) : m_data{data}, m_ptr_to_next_node{nullptr} {}
 
 template <typename T>
 void Node<T>::setData(T data) { m_data = data; }
@@ -38,7 +38,7 @@ void Node<T>::setData(T data) { m_data = data; }
 // Implementações da classe LinkedList
 template <typename T>
 LinkedList<T>::LinkedList(T data)
-    : m_head_node{std::make_unique<Node<T>>(data)} {}
+    : m_head_node{std::make_shared<Node<T>>(data)} {}
 
 template <typename T>
 T LinkedList<T>::info_data() const {
