@@ -2,6 +2,8 @@
 #define H_LINKEDLIST
 
 #include <memory>
+#include <stdexcept>
+#include <iostream>
 
 template <typename T>
 class Node {
@@ -27,8 +29,9 @@ private:
 public:
     LinkedList(T data);
     
-    T info_data() const;
+    void info_data();
     void addNode(T data);
+    void addNode(int index, T data);
 };
 
 // Implementações da classe Node
@@ -46,8 +49,13 @@ LinkedList<T>::LinkedList(T data)
     : m_head_node{std::make_shared<Node<T>>(data)} {}
 
 template <typename T>
-T LinkedList<T>::info_data() const {
-    return m_head_node->getData();
+void LinkedList<T>::info_data() {
+    auto aux_node = m_head_node;
+    do {
+        std::cout << aux_node->getData() << '\n';
+        aux_node = aux_node->getNextNode();
+    } while(aux_node != nullptr);
+    return;
 }
 template <typename T>
 void LinkedList<T>::addNode(T data) {
@@ -57,6 +65,28 @@ void LinkedList<T>::addNode(T data) {
         temp_node = temp_node->getNextNode();
     }
     temp_node->setNextNode(new_node);
+    m_size++;
+}
+template <typename T>
+void LinkedList<T>::addNode(int index, T data) {
+    std::shared_ptr<Node<T>> new_node{std::make_shared<Node<T>>(data)};
+    std::shared_ptr<Node<T>> aux_node = m_head_node;
+    if(index > m_size) {
+        std::cout << "Erro de índice." << '\n';
+        return;
+    }
+    else if(index == 1) {
+        m_head_node = new_node;
+        m_head_node->setNextNode(aux_node);
+        m_size++;
+        return;
+    }
+    for(int i{1}; i < (index-1); i++) {
+        aux_node = aux_node->getNextNode();
+    }
+    new_node->setNextNode(aux_node->getNextNode());
+    aux_node->setNextNode(new_node);
+    m_size++;
 }
 
 #endif
