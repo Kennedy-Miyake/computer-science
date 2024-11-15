@@ -68,7 +68,7 @@ void LinkedList<T>::addNode(T data) {
     while(temp_node->getNextNode() != nullptr) {
         temp_node = temp_node->getNextNode();
     }
-    temp_node->setNextNode(new_node);
+    temp_node->setNode(new_node);
     m_tail_node = temp_node;
     m_size++;
 }
@@ -82,15 +82,15 @@ void LinkedList<T>::addNode(int index, T data) {
     }
     else if(index == 1) {
         m_head_node = new_node;
-        m_head_node->setNextNode(aux_node);
+        m_head_node->setNode(aux_node);
         m_size++;
         return;
     }
     for(int i{1}; i < (index-1); i++) {
         aux_node = aux_node->getNextNode();
     }
-    new_node->setNextNode(aux_node->getNextNode());
-    aux_node->setNextNode(new_node);
+    new_node->setNode(aux_node->getNextNode());
+    aux_node->setNode(new_node);
     m_size++;
 }
 template <typename T>
