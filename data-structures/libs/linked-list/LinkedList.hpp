@@ -33,6 +33,7 @@ public:
     void info_data();
     void addNode(T data);
     void addNode(int index, T data);
+    void removeNode();
 };
 
 // Implementações da classe Node
@@ -89,5 +90,7 @@ void LinkedList<T>::addNode(int index, T data) {
     aux_node->setNextNode(new_node);
     m_size++;
 }
+template <typename T>
+void LinkedList<T>::removeNode() {}
 
 #endif
