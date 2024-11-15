@@ -24,6 +24,7 @@ template <typename T>
 class LinkedList {
 private:
     std::shared_ptr<Node<T>> m_head_node;
+    std::shared_ptr<Node<T>> m_tail_node;
     int m_size{1};
 
 public:
@@ -46,7 +47,7 @@ void Node<T>::setNextNode(std::shared_ptr<Node<T>> node) { m_ptr_to_next_node = 
 // Implementações da classe LinkedList
 template <typename T>
 LinkedList<T>::LinkedList(T data)
-    : m_head_node{std::make_shared<Node<T>>(data)} {}
+    : m_head_node{std::make_shared<Node<T>>(data)} { m_tail_node = m_head_node; }
 
 template <typename T>
 void LinkedList<T>::info_data() {
