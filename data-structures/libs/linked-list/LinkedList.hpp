@@ -19,6 +19,7 @@ public:
     T getData() const { return m_data; }
     void setNode(std::shared_ptr<Node<T>> node);
     std::shared_ptr<Node<T>> getNextNode() const { return m_ptr_to_next_node; }
+    std::shared_ptr<Node<T>> getPrevNode() const { return m_ptr_to_prev_node; }
 };
 
 template <typename T>
