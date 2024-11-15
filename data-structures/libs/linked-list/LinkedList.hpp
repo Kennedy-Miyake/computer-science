@@ -42,6 +42,7 @@ public:
     void addNode(T data);
     void addNode(int index, T data);
     void removeNode();
+    void test();
 };
 
 // Implementações da classe Node
@@ -81,9 +82,9 @@ void LinkedList<T>::addNode(T data) {
     while(temp_node->getNextNode() != nullptr) {
         temp_node = temp_node->getNextNode();
     }
-    new_node->setNode(temp_node);
-    temp_node->setNode(new_node);
-    m_tail_node = temp_node;
+    new_node->setNode(temp_node, PosNode::Previous);
+    temp_node->setNode(new_node, PosNode::Next);
+    m_tail_node = new_node;
     m_size++;
 }
 template <typename T>
@@ -109,5 +110,13 @@ void LinkedList<T>::addNode(int index, T data) {
 }
 template <typename T>
 void LinkedList<T>::removeNode() {}
+template <typename T>
+void LinkedList<T>::test() {
+    auto testNextHead = m_head_node->getNextNode(); 
+    auto testPrevNextHead = testNextHead->getPrevNode();
+
+    std::cout << testNextHead->getData() << '\n';
+    std::cout << testPrevNextHead->getData() << '\n';
+}
 
 #endif
