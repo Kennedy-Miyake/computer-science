@@ -5,6 +5,12 @@
 #include <stdexcept>
 #include <iostream>
 
+enum PosNode {
+    Next,
+    Previous,
+    All
+};
+
 template <typename T>
 class Node {
 private:
@@ -17,7 +23,7 @@ public:
 
     void setData(T data);
     T getData() const { return m_data; }
-    void setNode(std::shared_ptr<Node<T>> node);
+    void setNode(std::shared_ptr<Node<T>> node, PosNode pos);
     std::shared_ptr<Node<T>> getNextNode() const { return m_ptr_to_next_node; }
     std::shared_ptr<Node<T>> getPrevNode() const { return m_ptr_to_prev_node; }
 };
@@ -45,7 +51,14 @@ Node<T>::Node(T data) : m_data{data}, m_ptr_to_next_node{nullptr} {}
 template <typename T>
 void Node<T>::setData(T data) { m_data = data; }
 template <typename T>
-void Node<T>::setNode(std::shared_ptr<Node<T>> node) { m_ptr_to_next_node = node; }
+void Node<T>::setNode(std::shared_ptr<Node<T>> node, PosNode pos) {
+    if(pos == PosNode::Next) { m_ptr_to_next_node = node; }
+    else if(pos == PosNode::Previous) { m_ptr_to_prev_node = node; }
+    else if(pos == PosNode::All) {
+        m_ptr_to_next_node = node->getNextNode();
+        m_ptr_to_prev_node = node;
+    }
+}
 
 // Implementações da classe LinkedList
 template <typename T>
@@ -68,6 +81,7 @@ void LinkedList<T>::addNode(T data) {
     while(temp_node->getNextNode() != nullptr) {
         temp_node = temp_node->getNextNode();
     }
+    new_node->setNode(temp_node);
     temp_node->setNode(new_node);
     m_tail_node = temp_node;
     m_size++;
