@@ -72,7 +72,7 @@ void LinkedList<T>::addNode(int index, T data) {
     std::shared_ptr<Node<T>> new_node{std::make_shared<Node<T>>(data)};
     std::shared_ptr<Node<T>> aux_node = m_head_node;
     if(index > m_size) {
-        std::cerr << "Erro de índice." << '\n';
+        std::cout << "Erro de índice." << '\n';
         return;
     }
     else if(index == 1) {
