@@ -78,12 +78,12 @@ void LinkedList<T>::info_data() {
 template <typename T>
 void LinkedList<T>::addNode(T data) {
     std::shared_ptr<Node<T>> new_node{std::make_shared<Node<T>>(data)};
-    std::shared_ptr<Node<T>> temp_node = m_head_node;
-    while(temp_node->getNextNode() != nullptr) {
-        temp_node = temp_node->getNextNode();
+    std::shared_ptr<Node<T>> aux_node = m_head_node;
+    while(aux_node->getNextNode() != nullptr) {
+        aux_node = aux_node->getNextNode();
     }
-    new_node->setNode(temp_node, PosNode::Previous);
-    temp_node->setNode(new_node, PosNode::Next);
+    new_node->setNode(aux_node, PosNode::Previous);
+    aux_node->setNode(new_node, PosNode::Next);
     m_tail_node = new_node;
     m_size++;
 }
@@ -91,7 +91,7 @@ template <typename T>
 void LinkedList<T>::addNode(int index, T data) {
     std::shared_ptr<Node<T>> new_node{std::make_shared<Node<T>>(data)};
     std::shared_ptr<Node<T>> aux_node = m_head_node;
-    if(index > m_size) {
+    if(index > m_size || index == 0) {
         std::cout << "Erro de índice." << '\n';
         return;
     }
@@ -111,12 +111,6 @@ void LinkedList<T>::addNode(int index, T data) {
 template <typename T>
 void LinkedList<T>::removeNode() {}
 template <typename T>
-void LinkedList<T>::test() {
-    auto testNextHead = m_head_node->getNextNode(); 
-    auto testPrevNextHead = testNextHead->getPrevNode();
-
-    std::cout << testNextHead->getData() << '\n';
-    std::cout << testPrevNextHead->getData() << '\n';
-}
+void LinkedList<T>::test() {}
 
 #endif
