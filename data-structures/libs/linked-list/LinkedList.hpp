@@ -107,11 +107,18 @@ void LinkedList<T>::addNode(int index, T data) {
     }
     new_node->setNode(aux_node->getNextNode(), PosNode::Next);
     new_node->setNode(aux_node, PosNode::Previous);
+    (aux_node->getNextNode())->setNode(new_node, PosNode::Previous);
     aux_node->setNode(new_node, PosNode::Next);
     m_size++;
 }
 template <typename T>
-void LinkedList<T>::removeNode() {}
+void LinkedList<T>::removeNode() {
+    auto aux_node = m_tail_node;
+    m_tail_node = aux_node->getPrevNode();
+    m_tail_node->setNode(nullptr, PosNode::Next);
+    aux_node.reset();
+    m_size--;
+}
 template <typename T>
 void LinkedList<T>::test() {
     auto aux_head_node = m_head_node;

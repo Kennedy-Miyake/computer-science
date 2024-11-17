@@ -10,5 +10,10 @@ int main() {
     ll.addNode(3, 17);
 
     ll.test();
+
+    ll.removeNode();
+
+    std::cout << "\n";
+    ll.test();
     return 0;
 }
